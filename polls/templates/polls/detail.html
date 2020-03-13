@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Detail</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    {% if this_question %}
+        <ul>
+        {% for question in this_question %}
+
+            <p5><a href="{% url 'polls:detaill' question.id %}">Text: {{ question.question_text }}</a></p5>
+        <br></br>
+            <p>Publication date: {{ question.pub_date }}</p>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+</body>
+</html>
