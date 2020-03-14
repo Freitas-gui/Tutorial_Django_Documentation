@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
 </head>
 <body>
-    {% if this_question %}
-        <ul>
-        {% for question in this_question %}
+    <h1>{{ question.question_text }}</h1>
 
-            <p5><a href="{% url 'polls:detaill' question.id %}">Text: {{ question.question_text }}</a></p5>
-        <br></br>
-            <p>Publication date: {{ question.pub_date }}</p>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No polls are available.</p>
-    {% endif %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    
+    <form action="{% url 'polls:vote' question.id %}" method="post"> <! boa pratica incluir method="post" >
+    {% csrf_token %} <! padrao de seguranca do metodo post >
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> <! forloop.counterindica quantas vezes a fortag passou por seu loop>
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <input type="submit" value="Vote">
+    </form>
 </body>
 </html>
